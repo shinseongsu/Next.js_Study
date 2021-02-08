@@ -1,20 +1,38 @@
+import css from 'styled-jsx/css';
 import fetch from 'isomorphic-unfetch';
+import Profile from '../../components/Profile';
 
 const name = ({ user }) => {
-  const username = user && user.name;
-  return <div>{username}</div>;
+  if (!user) {
+    return null;
+  }
+
+  return (
+    <>
+      <Profile user={user} />
+    </>
+  );
 };
 
 export const getServerSideProps = async ({ query }) => {
   const { name } = query;
+
   try {
-    console.log(name);
-    const res = await fetch(`https://api.github.com/users/${name}`);
-    if (res.status === 200) {
-      const user = await res.json();
-      return { props: { user } };
+    let user;
+    let repos;
+
+    const userRes = await fetch(`https://api.github.com/users/${name}`);
+    if (userRes.status === 200) {
+      user = await userRes.json();
     }
-    return { props: {} };
+    const repoRes = await fetch(
+      `https://api.github.com/users/${name}/repos?sort=updated&page=1&perpage=10`
+    );
+    if (repoRes.status === 200) {
+      repos = await repoRes.json();
+    }
+    console.log(repos);
+    return { props: { user, repos } };
   } catch (e) {
     console.log(e);
     return { props: {} };

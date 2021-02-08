@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { jsx as _jsx } from \"react/jsx-runtime\";\n\nvar name = function name(_ref) {\n  var user = _ref.user;\n  var username = user && user.name;\n  return /*#__PURE__*/_jsx(\"div\", {\n    children: username\n  });\n};\n\nexport var __N_SSP = true;\nexport default name;","map":null,"metadata":{},"sourceType":"module"}

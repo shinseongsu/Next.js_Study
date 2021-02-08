@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { jsxs as _jsxs } from \"react/jsx-runtime\";\n\nvar name = function name(_ref) {\n  var user = _ref.user,\n      time = _ref.time;\n  var username = user && user.name;\n  return /*#__PURE__*/_jsxs(\"div\", {\n    children: [username, time]\n  });\n};\n\nexport var __N_SSG = true;\nexport default name;","map":null,"metadata":{},"sourceType":"module"}
