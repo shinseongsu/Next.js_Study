@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { jsx as _jsx } from \"react/jsx-runtime\";\n\nconst Error = () => {\n  return /*#__PURE__*/_jsx(\"p\", {\n    children: \"\\uC5D0\\uB7EC\\uAC00 \\uBC1C\\uC0DD\\uD588\\uC2B5\\uB2C8\\uB2E4.\"\n  });\n};\n\nexport default Error;","map":null,"metadata":{},"sourceType":"module"}
