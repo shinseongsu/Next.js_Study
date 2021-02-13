@@ -6,6 +6,6 @@ export default {
     blue: "#AEE4FF",
     navy: "#B5C7ED",
     gray: "#E5E5E5",
-    deeo_red: "#F35456",
+    deep_red: "#F35456",
     deep_green: "#47E774"
 };
