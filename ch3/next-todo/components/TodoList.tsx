@@ -1,9 +1,10 @@
-import React, { useMemo, useCallback } from "react";
+import React, { useMemo, useCallback, useState } from "react";
 import styled from "styled-components";
 import palette from "../styles/palette";
 import { TodoTypes } from "../types/todo";
 import TrashCanIcon from "../public/statics/svg/trash_can.svg";
 import CheckMarkIcon from "../public/statics/svg/check_mark.svg";
+import { checkTodoAPI } from "../lib/api/todo";
 
 const Container = styled.div`
     width: 100%;
@@ -132,6 +133,27 @@ type ObjectIndexType = {
 
 const TodoList: React.FC<IProps> = ({ todos }) => {
 
+    const [localTodos, setLocalTodos] = useState(todos);
+
+    // 투두 체크하기
+    const checkTodo = async (id: number) => {
+        try {
+            await checkTodoAPI(id);
+            console.log("체크하였습니다.");
+
+            const newTodos = localTodos.map((todo) => {
+                if(todo.id === id) {
+                    return { ...todo, checked: !todo.checked };
+                }
+                return todo;
+            });
+            setLocalTodos(newTodos);
+        } catch(e) {
+            console.log(e);
+        }
+    };
+
+
     const getTodoColorNums = useCallback(() => {
         let red = 0;
         let orange = 0;
@@ -192,7 +214,7 @@ const TodoList: React.FC<IProps> = ({ todos }) => {
         <Container>
             <div className="todo-list-header">
                 <p className="todo-list-last-todo">
-                    남은 TODO <span>{todos.length}개</span>
+                    남은 TODO <span>{localTodos.length}개</span>
                 </p>
                 <div className="todo-list-header-colors">
                     {Object.keys(todoColorNums).map((color, index) => (
@@ -217,14 +239,20 @@ const TodoList: React.FC<IProps> = ({ todos }) => {
                             {todo.checked && (
                                 <>
                                     <TrashCanIcon className="todo-trash-can" onClick={() => {}} />
-                                    <CheckMarkIcon className="todo-check-mark" onClick={() => {}} />
+                                    <CheckMarkIcon 
+                                        className="todo-check-mark" 
+                                        onClick={() => {
+                                            checkTodo(todo.id);
+                                        }} />
                                 </>
                             )}
                             {!todo.checked && (
                                 <button 
                                     type="button"
                                     className="todo-button"
-                                    onClick={() => {}}
+                                    onClick={() => {
+                                        checkTodo(todo.id);
+                                    }}
                                     />
                             )}
                         </div>
